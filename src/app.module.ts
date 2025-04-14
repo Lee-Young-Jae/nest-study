@@ -7,9 +7,12 @@ import * as path from 'path';
 
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
+console.log(`.env.${process.env.NODE_ENV}`);
+
 @Module({
   imports: [
     ConfigModule.forRoot({
+      envFilePath: `.env.${process.env.NODE_ENV}`,
       isGlobal: true,
     }),
     TypeOrmModule.forRootAsync({
@@ -23,7 +26,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         username: configService.get('DB_USER'), // 설정한 username입력, 기본은 root
         password: configService.get('DB_PASSWORD'), // 설정한 password입력
         entities: [path.join(__dirname, '/entities/**/*.entity.{js, ts}')],
-        synchronize: false, // 무조건 false로 해두세요.
+        synchronize: false, // 무조건 false로 해두세요
         logging: true, // typeorm 쿼리 실행시, MySQL의 쿼리문을 터미널에 보여줍니다.
         timezone: 'local',
       }),
