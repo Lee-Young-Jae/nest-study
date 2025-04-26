@@ -21,7 +21,7 @@ console.log(`.env.${process.env.NODE_ENV}`);
         retryAttempts: 10, // 연결에 실패했을 경우, 연결 재시도 횟수를 의미합니다.
         type: 'mysql', // 어떤 DB를 사용할 것인지
         host: configService.get('DB_HOST'), // 우리는 본인 컴퓨터에 설치된 DB를 사용할 것이디 localhost로 설정
-        port: configService.get('DB_PORT'), // MySQL의 기본 포트는 3306 입니다.
+        port: configService.get('DB_PORT') || 3306, // MySQL의 기본 포트는 3306 입니다.
         database: configService.get('DB_NAME'), // 위에서 만든 study 데이터베이스로 설정
         username: configService.get('DB_USER'), // 설정한 username입력, 기본은 root
         password: configService.get('DB_PASSWORD'), // 설정한 password입력
