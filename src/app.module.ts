@@ -7,6 +7,7 @@ import * as path from 'path';
 
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
+import { ArticleModule } from './res/article/article.module';
 
 console.log(`.env.${process.env.NODE_ENV}`);
 
@@ -34,6 +35,7 @@ console.log(`.env.${process.env.NODE_ENV}`);
     }),
     UserModule,
     AuthModule,
+    ArticleModule,
   ],
   controllers: [AppController],
   providers: [AppService],
