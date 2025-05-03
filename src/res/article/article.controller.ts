@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { ArticleService } from './article.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
@@ -17,5 +17,24 @@ export class ArticleController {
       content,
       userId,
     );
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Put('/:id')
+  async updateArticle(@Param('id') id, @User() user, @Body() body) {
+    const userId = user.id;
+    const articleId = id;
+
+    const title = body.title;
+    const content = body.content;
+
+    const res = await this.articleService.modifyArticle(
+      userId,
+      articleId,
+      title,
+      content,
+    );
+
+    return res;
   }
 }
