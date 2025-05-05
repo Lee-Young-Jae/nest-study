@@ -19,6 +19,13 @@ export class ArticleService {
     return article;
   }
 
+  async getArticle(articleId: string) {
+    const article = await this.articleRepository.findOne({
+      where: { id: articleId },
+    });
+    return article;
+  }
+
   async modifyArticle(
     userId: string,
     articleId: string,
@@ -45,5 +52,15 @@ export class ArticleService {
     );
 
     return { affected: updateResult?.affected };
+  }
+
+  async removeArticle(userId: string, articleId: string) {
+    // await this.articleRepository.softDelete({ id: articleId });
+    const deleteResult = await this.articleRepository.softDelete({
+      id: articleId,
+      userId,
+    });
+
+    return { affected: deleteResult?.affected };
   }
 }
