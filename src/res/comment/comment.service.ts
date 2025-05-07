@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CommentEntity } from 'src/entities/comment.entity';
@@ -24,5 +28,28 @@ export class CommentService {
     });
 
     return comment;
+  }
+
+  async modifyComment(commentId: string, userId: string, content: string) {
+    const existComment = await this.commentRepository.findOne({
+      where: { id: commentId, userId },
+    });
+
+    if (!existComment) {
+      throw new UnauthorizedException('본인의 댓글이 아닙니다.');
+    }
+
+    const updateResult = await this.commentRepository.update(
+      {
+        id: commentId,
+      },
+      {
+        content,
+      },
+    );
+
+    return {
+      affected: updateResult.affected,
+    };
   }
 }
