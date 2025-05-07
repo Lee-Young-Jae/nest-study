@@ -52,4 +52,20 @@ export class CommentService {
       affected: updateResult.affected,
     };
   }
+
+  async removeComment(commentId: string, userId: string) {
+    const existComment = await this.commentRepository.findOne({
+      where: { id: commentId, userId },
+    });
+
+    if (!existComment) {
+      throw new UnauthorizedException('본인의 댓글이 아닙니다.');
+    }
+
+    const deleteResult = await this.commentRepository.softDelete(commentId);
+
+    return {
+      affected: deleteResult.affected,
+    };
+  }
 }
