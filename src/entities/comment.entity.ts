@@ -5,7 +5,7 @@ import { UserEntity } from './user.entity';
 
 @Entity('Comment')
 export class CommentEntity extends CommonBigPKEntity {
-  @Column('bigint', { unique: false, nullable: false })
+  @Column('text', { unique: false, nullable: false })
   content: string;
 
   @Column('bigint', { unique: false, nullable: true })
