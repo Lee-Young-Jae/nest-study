@@ -20,7 +20,7 @@ export class CommentService {
     content: string,
     userId: string,
   ) {
-    const comment = await this.commentRepository.create({
+    const comment = await this.commentRepository.save({
       parentId,
       articleId,
       content,

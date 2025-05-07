@@ -22,6 +22,9 @@ export class ArticleService {
   async getArticle(articleId: string) {
     const article = await this.articleRepository.findOne({
       where: { id: articleId },
+      relations: {
+        comments: true,
+      },
     });
     return article;
   }
