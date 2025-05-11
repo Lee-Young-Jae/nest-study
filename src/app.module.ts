@@ -9,6 +9,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { ArticleModule } from './res/article/article.module';
 import { CommentModule } from './res/comment/comment.module';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { UndefinedToNullInterceptor } from './interceptors/undefinedToNull.interceptor';
 
 console.log(`.env.${process.env.NODE_ENV}`);
 
@@ -40,6 +42,12 @@ console.log(`.env.${process.env.NODE_ENV}`);
     CommentModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_INTERCEPTOR, // 글로벌 인터셉터
+      useClass: UndefinedToNullInterceptor,
+    },
+  ],
 })
 export class AppModule {}
