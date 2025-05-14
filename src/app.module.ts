@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, ValidationPipe } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './res/user/user.module';
@@ -9,7 +9,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { ArticleModule } from './res/article/article.module';
 import { CommentModule } from './res/comment/comment.module';
-import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
+import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { UndefinedToNullInterceptor } from './interceptors/undefinedToNull.interceptor';
 import { HttpExceptionFilter } from './filter/http-exception.filter';
 
@@ -52,6 +52,10 @@ console.log(`.env.${process.env.NODE_ENV}`);
     {
       provide: APP_FILTER,
       useClass: HttpExceptionFilter,
+    },
+    {
+      provide: APP_PIPE,
+      useClass: ValidationPipe,
     },
   ],
 })
