@@ -24,6 +24,7 @@ export class ArticleController {
 
   @Get('/:id')
   async readArticle(@Param('id') id) {
+    // async readArticle(@Param('id', ParseIntPipe) id: number) {
     const article = await this.articleService.getArticle(id);
     return article;
   }
